@@ -20,3 +20,17 @@
 тест 8- се проверува дали cardNumber не е null и дали cardNumber.length() е 16
 
 тест 9- дали allowed.indexOf(c) е -1
+## Тест случаи според критериумот Multiple Condition 
+Условот што се тестира: 
+
+if (item.getPrice() > 300 || item.getDiscount() > 0 || item.getQuantity() > 10)
+
+Овој услов има три подуслови:
+
+A: item.getPrice() > 300
+
+B: item.getDiscount() > 0
+
+C: item.getQuantity() > 10
+
+Според критериумот за Multiple Condition, потребно е да ги покриеме сите можни комбинации на True/False вредности на овие три услови. Тоа значи дека се потребни 8 тест случаи, бидејќи 2³ = 8.
