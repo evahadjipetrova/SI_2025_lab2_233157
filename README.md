@@ -33,4 +33,20 @@ B: item.getDiscount() > 0
 
 C: item.getQuantity() > 10
 
-Според критериумот за Multiple Condition, потребно е да ги покриеме сите можни комбинации на True/False вредности на овие три услови. Тоа значи дека се потребни 8 тест случаи, бидејќи 2³ = 8.
+Според критериумот за Multiple Condition, потребно е да ги покриеме сите можни комбинации на True/False вредности на овие три услови. Тоа значи дека се потребни 8 тест случаи, бидејќи 2³ = 8
+
+C1  (False False False)-Условот е False (не се одзема 30)	Сите услови се False
+
+C2	(False False True)-Условот е True (се одзема 30)	Само C е True
+
+C3	(False True	False)-Условот е True (се одзема 30)	Само B е True
+
+C4	(False True True)-Условот е True (се одзема 30)	B и C се True
+
+C5	(True	False	False)-Условот е True (се одзема 30)	Само A е True
+
+C6	(True	False	True)-Условот е True (се одзема 30)	A и C се True
+
+C7	(True	True False)-Условот е True (се одзема 30)	A и B се True
+
+C8	(True	True True)-Условот е True (се одзема 30)	Сите услови се True
