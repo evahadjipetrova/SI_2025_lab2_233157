@@ -1,81 +1,93 @@
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
-import java.util.ArrayList;
 
-public class SILab2Test {
+class Item {
+    String name;
+    int quantity; 
+    int price;
+    double discount;
 
-    @Test
-    public void testEveryStatement() {
-
-        RuntimeException ex = assertThrows(RuntimeException.class, () ->
-                SILab2.checkCart(null, "1234567890123456"));
-        assertTrue(ex.getMessage().contains("allItems list can't be null"));
-
-
-        List<Item> items2 = List.of(new Item("", 12, 10, 0));
-        ex = assertThrows(RuntimeException.class, () ->
-                SILab2.checkCart(items2, "1234567890123456"));
-        assertTrue(ex.getMessage().contains("Invalid item!"));
-
-
-        List<Item> items3 = List.of(new Item("Map", 2, 250, 0.1));
-        double result = SILab2.checkCart(items3, "1234567890123456");
-
-        double expected = -30 + 250 * 0.9 * 2;
-        assertEquals(expected, result);
-
-
-        List<Item> items4 = List.of(new Item("Flower", 2, 200, 0));
-        ex = assertThrows(RuntimeException.class, () ->
-                SILab2.checkCart(items4, "123456789012abcd"));
-        assertTrue(ex.getMessage().contains("Invalid character in card number!"));
+    public Item(String name, int quantity, int price, double discount) {
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.discount = discount;
     }
 
-    @Test
-    public void testMultipleCondition() {
+    public String getName() {
+        return name;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public double getDiscount() {
+        return discount;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public void setDiscount(double discount) {
+        this.discount = discount;
+    }
+}
 
 
-
-        Item item1 = new Item("Item1", 1, 100, 0);
-
-
-        Item item2 = new Item("Item2", 12, 100, 0);
-
-
-        Item item3 = new Item("Item3", 1, 100, 0.2);
-
-
-        Item item4 = new Item("Item4", 12, 100, 0.2);
-
-
-        Item item5 = new Item("Item5", 1, 400, 0);
-
-
-        Item item6 = new Item("Item6", 11, 400, 0);
-
-
-        Item item7 = new Item("Item7", 1, 400, 0.2);
-
-
-        Item item8 = new Item("Item8", 11, 400, 0.2);
-
-        List<Item> allItems = List.of(item1, item2, item3, item4, item5, item6, item7, item8);
-        double total = SILab2.checkCart(allItems, "1234567890123456");
-
-        
-        double expected = 0;
-        for (Item i : allItems) {
-            if (i.getPrice() > 300 || i.getDiscount() > 0 || i.getQuantity() > 10) {
-                expected -= 30;
-            }
-            if (i.getDiscount() > 0) {
-                expected += i.getPrice() * (1 - i.getDiscount()) * i.getQuantity();
-            } else {
-                expected += i.getPrice() * i.getQuantity();
-            }
+public class SILab2 {
+    public static double checkCart(List<Item> allItems, String cardNumber){
+        if (allItems == null){
+            throw new RuntimeException("allItems list can't be null!");
         }
 
-        assertEquals(expected, total);
+        double sum = 0;
+
+        for (int i = 0; i < allItems.size(); i++){
+            Item item = allItems.get(i);
+            if (item.getName() == null || item.getName().length() == 0){
+                throw new RuntimeException("Invalid item!");
+            }
+
+            if (item.getPrice() > 300 || item.getDiscount() > 0 || item.getQuantity() > 10){
+                sum -= 30;
+            }
+
+            if (item.getDiscount() > 0){
+                sum += item.getPrice()*(1-item.getDiscount())*item.getQuantity();
+            }
+            else {
+                sum += item.getPrice()*item.getQuantity();
+            }
+
+        }
+        if (cardNumber != null && cardNumber.length() == 16) {
+            String allowed = "0123456789";
+            char[] chars = cardNumber.toCharArray();
+            for (int j = 0; j < cardNumber.length(); j++) {
+                char c = cardNumber.charAt(j);
+                if (allowed.indexOf(c) == -1) {
+                    throw new RuntimeException("Invalid character in card number!");
+                }
+            }
+        }
+        else{
+            throw new RuntimeException("Invalid card number!");
+        }
+
+        return sum;
+
     }
 }
